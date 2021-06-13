@@ -1,0 +1,45 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: container-build-push-from-source-pipeline-template
+spec:
+  params:
+  - name: git-repo-name
+    description: git repo name
+  - name: git-repo-url
+    description: git repository url
+  - name: git-revision
+    description: git revision
+  - name: git-branch
+    description: git branch
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: $(tt.params.git-repo-name)-run-
+    spec:
+      pipelineRef:
+        name: container-build-push-from-source
+      params:
+      - name: git-repo-name
+        value: $(tt.params.git-repo-name)
+      - name: git-repo-url
+        value: $(tt.params.git-repo-url)
+      - name: git-revision
+        value: $(tt.params.git-revision)
+      - name: git-branch
+        value: $(tt.params.git-branch)
+      - name: image-format
+        value: docker
+      serviceAccountName: pipeline
+      workspaces:
+      - name: myworkspace
+        volumeClaimTemplate:
+          metadata:
+            name: $(tt.params.git-repo-name)-pvc
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+               requests:
+                  storage: 50Mi
+

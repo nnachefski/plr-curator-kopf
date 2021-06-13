@@ -1,0 +1,84 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  annotations:
+  name: container-build-push-from-source
+spec:
+  params:
+    - description: git repo url
+      name: git-repo-url
+      type: string
+    - description: git repo name
+      name: git-repo-name
+      type: string
+    - description: git repo dir
+      name: git-repo-dir
+      type: string
+      default: .
+    - description: git revision
+      name: git-revision
+      type: string
+    - default: 'master'
+      description: specifiy the branch
+      name: git-branch
+      type: string
+    - default: repo-harbor.apps.okd.nnlabs.net
+      description: image repo url
+      name: image-repo
+      type: string
+    - default: techchallenge
+      description: image project name
+      name: image-project
+      type: string
+    - default: oci
+      description: format to build in (oci or docker)
+      name: image-format
+      type: string    
+    - default: Dockerfile
+      description: path to dockerfile
+      name: dockerfilepath
+      type: string
+    - default: 'true'
+      name: tlsverify
+      type: string
+  tasks:
+    - name: git-clone
+      params:
+        - name: url
+          value: $(params.git-repo-url)
+        - name: revision
+          value: $(params.git-revision)
+        - name: refspec
+          value: $(params.git-branch)
+      workspaces:
+        - name: output
+          workspace: myworkspace  
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+    - name: buildah-custom
+      params:
+        - name: DOCKERFILE
+          value: $(params.dockerfilepath)
+        - name: FORMAT
+          value: $(params.image-format)       
+        - name: IMAGE
+          value: >-
+            $(params.image-repo)/$(params.image-project)/$(params.git-repo-name)
+        - name: TAG
+          value: $(params.git-revision)
+        - name: TLSVERIFY
+          value: $(params.tlsverify)
+        - name: CONTEXT
+          value: $(params.git-repo-dir) 
+      workspaces:
+        - name: source
+          workspace: myworkspace          
+      taskRef:
+        kind: ClusterTask
+        name: buildah-custom
+      runAfter:
+        - git-clone  
+  workspaces:
+  - name: myworkspace
+

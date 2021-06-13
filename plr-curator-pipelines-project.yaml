@@ -1,0 +1,10 @@
+apiVersion: nnlabs.net/v1
+kind: PLRCurator
+metadata:
+  name: pipelines-curator
+  namespace: plr-curator
+spec:
+  plrlimit: 3
+  namespace: pipelines
+  repoparam: git-repo-name
+

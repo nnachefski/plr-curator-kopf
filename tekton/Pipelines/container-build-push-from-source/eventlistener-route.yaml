@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    openshift.io/host.generated: "true"
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: container-build-push-from-source-listener
+  name: el-container-build-push-from-source-listener
+spec:
+  host: el-container-build-push-from-source-listener-pipelines.apps.okd.nnlabs.net
+  port:
+    targetPort: listener
+  to:
+    kind: Service
+    name: el-container-build-push-from-source-listener
+    weight: 100
+  wildcardPolicy: None

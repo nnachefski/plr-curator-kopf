@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+  name: container-build-push-from-source
+  labels:
+    tekton.dev/pipeline: container-build-push-from-source
+spec:
+  params:
+    - name: git-repo-url
+      value: https://github.com/globalinfotek/plr-curator-kopf.git
+    - name: git-repo-name
+      value: 'plr-curator-operator'
+    - name: git-revision
+      value: 'master'
+    - name: git-repo-dir
+      value: 'plr-curator'
+    - name: dockerfilepath
+      value: 'plr-curator/Dockerfile'      
+  pipelineRef:
+    name: container-build-push-from-source
+  serviceAccountName: pipeline
+  workspaces:
+    - name: myworkspace
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+          name: plr-curator-pvc
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 50Mi
+

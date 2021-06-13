@@ -1,0 +1,22 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: container-build-push-from-source-listener
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: container-build-push-from-source-trigger
+      interceptors:
+        - github:
+            secretRef:
+              secretName: webhook-secret
+              secretKey: WebHookSecretKey        
+            eventTypes: ["push", "pull_request"]
+        - cel:
+            overlays:
+            - key: extensions.branch_name
+              expression: "body.ref.split('/')[2]"
+      bindings:
+        - ref: nnlabs-github-push-pull
+      template:
+        name: container-build-push-from-source-pipeline-template
