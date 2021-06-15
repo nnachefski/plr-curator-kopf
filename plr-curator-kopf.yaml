@@ -61,7 +61,7 @@ rules:
     verbs: [list, watch, delete, patch]
     
   # For watching PLRC objects cluster-wide
-  - apiGroups: [nnlabs.net]
+  - apiGroups: [nicknach.net]
     resources: [plrcurators]
     verbs: [list, watch, delete, patch]    
 ---
@@ -79,7 +79,7 @@ subjects:
     namespace: plr-curator
 ---
 # Currator PLRC for the 'pipelines' project
-apiVersion: nnlabs.net/v1
+apiVersion: nicknach.net/v1
 kind: PLRCurator
 metadata:
   name: pipelines-curator
@@ -119,7 +119,7 @@ spec:
         deployment: plr-curator-kopf
     spec:
       containers:
-      - image: repo-harbor.apps.okd.nnlabs.net/techchallenge/plr-curator-kopf:latest
+      - image: repo-harbor.apps.okd.nicknach.net/techchallenge/plr-curator-kopf:latest
         imagePullPolicy: Always
         name: plr-curator-kopf
         resources: {}

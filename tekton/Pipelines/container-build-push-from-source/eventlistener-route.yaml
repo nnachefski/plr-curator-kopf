@@ -9,7 +9,7 @@ metadata:
     eventlistener: container-build-push-from-source-listener
   name: el-container-build-push-from-source-listener
 spec:
-  host: el-container-build-push-from-source-listener-pipelines.apps.okd.nnlabs.net
+  host: el-container-build-push-from-source-listener-pipelines.apps.okd.nicknach.net
   port:
     targetPort: listener
   to:

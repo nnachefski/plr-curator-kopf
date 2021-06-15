@@ -17,6 +17,6 @@ spec:
             - key: extensions.branch_name
               expression: "body.ref.split('/')[2]"
       bindings:
-        - ref: nnlabs-github-push-pull
+        - ref: nicknach-github-push-pull
       template:
         name: container-build-push-from-source-pipeline-template

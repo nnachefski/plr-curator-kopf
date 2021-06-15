@@ -40,14 +40,14 @@ def parse_plrc_data(cr, logger):
 #
 
 # this event handler processes ALL PipeLineRunCurator CRs on startup
-@kopf.on.resume('nnlabs.net', 'v1', 'plrcurators')
+@kopf.on.resume('nicknach.net', 'v1', 'plrcurators')
 def curator_handler_onresume(spec, meta, logger, **_):
     # initialize the kube and openshift clients
     k8s_client = kubernetes.client.ApiClient()
     dyn_client = DynamicClient(k8s_client)
 
     # get PLRCs in the operator's namespace.  We only care about PLRCs in the operator's namespace, all others are ignored.
-    cr_resources = dyn_client.resources.get(api_version='nnlabs.net/v1', kind='PLRCurator')
+    cr_resources = dyn_client.resources.get(api_version='nicknach.net/v1', kind='PLRCurator')
     crs = cr_resources.get(namespace=meta.get('namespace'))
 
     # do some sanity checking on resume
@@ -70,7 +70,7 @@ def curator_handler_onresume(spec, meta, logger, **_):
 
 
 # this event handler processes NEW PipeLineRunCurator CRs on creation
-@kopf.on.create('nnlabs.net', 'v1', 'plrcurators')
+@kopf.on.create('nicknach.net', 'v1', 'plrcurators')
 def curator_handler_oncreate(spec, meta, logger, **_):
     logger.info("- processing PipelineRunCurator '%s' on 'create'..."%(meta.get('name')))
 
@@ -79,7 +79,7 @@ def curator_handler_oncreate(spec, meta, logger, **_):
     dyn_client = DynamicClient(k8s_client)
 
     # get PLRCs in the operator's namespace.  We only care about PLRCs in the operator's namespace, all others are ignored.
-    cr_resources = dyn_client.resources.get(api_version='nnlabs.net/v1', kind='PLRCurator')
+    cr_resources = dyn_client.resources.get(api_version='nicknach.net/v1', kind='PLRCurator')
     crs = cr_resources.get(namespace=meta.get('namespace'))
 
     for cr in crs.items:
@@ -109,7 +109,7 @@ def plr_handler(spec, meta, logger, **_):
 
     # get PLRCs in the operator's namespace.  We only care about PLRCs in the operator's namespace, all others are ignored.
     # this will be used later to apply PLRLIMITs and Namespace
-    cr_resources = dyn_client.resources.get(api_version='nnlabs.net/v1', kind='PLRCurator')
+    cr_resources = dyn_client.resources.get(api_version='nicknach.net/v1', kind='PLRCurator')
     crs = cr_resources.get(namespace=meta.get('namespace'))
 
     # get all PipelineRun objects

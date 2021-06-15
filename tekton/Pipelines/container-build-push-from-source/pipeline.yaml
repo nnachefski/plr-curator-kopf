@@ -22,7 +22,7 @@ spec:
       description: specifiy the branch
       name: git-branch
       type: string
-    - default: repo-harbor.apps.okd.nnlabs.net
+    - default: repo-harbor.apps.okd.nicknach.net
       description: image repo url
       name: image-repo
       type: string

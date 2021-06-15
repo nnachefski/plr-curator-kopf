@@ -1,4 +1,4 @@
-apiVersion: nnlabs.net/v1
+apiVersion: nicknach.net/v1
 kind: PLRCurator
 metadata:
   name: pipelines-curator
