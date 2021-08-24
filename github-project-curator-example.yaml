@@ -1,0 +1,9 @@
+apiVersion: gitilabs.net/v1
+kind: PLRCurator
+metadata:
+  name: github-plrc
+  namespace: plr-curator
+spec:
+  plrlimit: 3
+  namespace: github
+  repoparam: git-repo-name
