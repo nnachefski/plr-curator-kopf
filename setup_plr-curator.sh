@@ -15,3 +15,4 @@ cat plr-curator-kopf.yaml |sed "s/\$HARBOR_CFG/$HARBOR_CFG/" |oc apply -f -
 
 # https://raw.githubusercontent.com/zalando-incubator/kopf/master/peering.yaml
 
+
