@@ -14,3 +14,4 @@ cat plr-curator-kopf.yaml |sed "s/\$HARBOR_CFG/$HARBOR_CFG/" |oc apply -f -
 # - run 'kopf run -A handlers.py --priority=100'"
 
 # https://raw.githubusercontent.com/zalando-incubator/kopf/master/peering.yaml
+
