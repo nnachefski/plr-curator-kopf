@@ -5,5 +5,5 @@ metadata:
   namespace: plr-curator
 spec:
   plrlimit: 3
-  namespace: github
+  namespace: hc-pipelines
   repoparam: git-repo-name

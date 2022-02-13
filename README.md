@@ -56,5 +56,3 @@ export HARBOR_CFG=`cat harbor-secret.json |base64`
 ```
 ./setup_plr-curator.sh
 ```
-
-
